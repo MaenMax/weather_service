@@ -8,6 +8,10 @@ import (
 	"os"
 )
 
+var (
+	OPEN_WEATHER_API_KEY string
+)
+
 type WeatherResponse struct {
 	Main struct {
 		Temp float64 `json:"temp"`
@@ -15,6 +19,13 @@ type WeatherResponse struct {
 	Weather []struct {
 		Main string `json:"main"`
 	} `json:"weather"`
+}
+
+func init() {
+	OPEN_WEATHER_API_KEY = os.Getenv("OPEN_WEATHER_API_KEY")
+	if OPEN_WEATHER_API_KEY == "" {
+		panic("OpenWeather API key not providedr")
+	}
 }
 
 func kelvinToCelsius(kelvin float64) float64 {
@@ -35,13 +46,8 @@ func weatherHandler(w http.ResponseWriter, r *http.Request) {
 	lat := r.URL.Query().Get("lat")
 	lon := r.URL.Query().Get("lon")
 
-	apiKey := os.Getenv("OPEN_WEATHER_API_KEY")
-	if apiKey == "" {
-		http.Error(w, "OpenWeather API key not provided", http.StatusInternalServerError)
-		return
-	}
+	url := fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&appid=%s", lat, lon, OPEN_WEATHER_API_KEY)
 
-	url := fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&appid=%s", lat, lon, apiKey)
 	resp, err := http.Get(url)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
