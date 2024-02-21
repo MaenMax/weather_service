@@ -1,0 +1,26 @@
+Weather Service coding exercise
+
+This is a simple HTTP server written in Go that uses the OpenWeather API to provide weather information for given latitude and longitude coordinates.
+
+Prerequisites:
+- Go installed on your machine (https://golang.org/doc/install)
+- OpenWeather API key (sign up at https://home.openweathermap.org/users/sign_up)
+
+Setup:
+1. Clone this repository to your local machine.
+2. Set up your OpenWeather API key:
+   - Create an environment variable named `OPEN_WEATHER_API_KEY` and set its value to your OpenWeather API key obtained after signing-up at https://home.openweathermap.org/users/sign_up
+3. Run the server:
+   - Open a terminal window.
+   - Navigate to the directory where you cloned the repository.
+   - Run the command `go run weather_service.go`.
+   - The server will start running on port 8080.
+
+Usage:
+- Once the server is running, you can make GET requests to `http://localhost:8080/weather` with query parameters `lat` and `lon` to get weather information for specific coordinates.
+- Example request: `http://localhost:8080/weather?lat=33.662127&lon=-117.666895`
+
+Response Format:
+The server responds with a JSON object containing the following fields:
+- weather_condition: The main weather condition (e.g., "Rain", "Clear", "Clouds").
+- temperature: The temperature in Celsius along with its definition (Cold,hot, or modirate)
