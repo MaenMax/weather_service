@@ -1,0 +1,21 @@
+server:
+  port: "8080"
+  read_timeout: "15s"
+  write_timeout: "15s"
+  idle_timeout: "60s"
+
+weather:
+  base_url: "https://api.weather.gov"
+  request_timeout: "10s"
+  max_retries: 3
+  retry_delay: "1s"
+  cache_ttl: "15m"
+  max_concurrent_req: 100
+
+logging:
+  level: "info"
+  format: "json"
+
+metrics:
+  enabled: true
+  path: "/metrics"
